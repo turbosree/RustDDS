@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dds-shape-demo-sub
+spec:
+  selector:
+    matchLabels:
+      app: dds-shape-demo-sub
+  replicas: 1 # 1
+  template:
+    metadata:
+      labels:
+        app: dds-shape-demo-sub
+    spec:
+      containers:
+      - name: dds-shape-demo-sub
+        image: dds-shape-demo:1.2.1
+        env:
+        - name: DDS_LOG_LEVEL
+          value: "1"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10    
+          successThreshold: 1
+          tcpSocket:
+            port: 8080
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          tcpSocket:
+            port: 8080
+          timeoutSeconds: 1
+          resources:
+          limits:
+          # memory: 128Mi
+          securityContext:
+          # privileged: false
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dds-shape-demo-sub
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080    
+      targetPort: 8080
+  selector:
+    app: dds-shape-demo-sub

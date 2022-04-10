@@ -14,4 +14,4 @@ RUN cargo build --release --example=shapes_demo
 FROM gcr.io/distroless/cc
 COPY --from=build-env /app/target/release/examples/shapes_demo /
 ENTRYPOINT ["./shapes_demo"]
-CMD ["-P", "-t", "Square"]
+CMD ["-S", "-t", "Square"]
