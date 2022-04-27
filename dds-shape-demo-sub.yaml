@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dds-shape-demo-sub
+  name: dds-shape-demo-sub-1
 spec:
   selector:
     matchLabels:
-      app: dds-shape-demo-sub
+      app: dds-shape-demo-sub-1
   replicas: 1 # 1
   template:
     metadata:
       labels:
-        app: dds-shape-demo-sub
+        app: dds-shape-demo-sub-1
     spec:
       containers:
-      - name: dds-shape-demo-sub
-        image: dds-shape-demo:1.2.1
+      - name: dds-shape-demo-sub-1
+        image: dds-shape-demo-sub-1:1.0.0
         env:
         - name: DDS_LOG_LEVEL
           value: "1"
@@ -49,11 +49,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: dds-shape-demo-sub
+  name: dds-shape-demo-sub-1
 spec:
   ports:
     - protocol: TCP
       port: 8080    
       targetPort: 8080
   selector:
-    app: dds-shape-demo-sub
+    app: dds-shape-demo-sub-1
